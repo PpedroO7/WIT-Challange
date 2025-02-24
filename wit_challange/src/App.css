@@ -30,7 +30,7 @@ body, .container {
 
 .title {
   text-align: center;
-  font-size: 28px;
+  font-size:  2vw !important;
   font-weight: bold;
   color: #2d2d2d;
   margin-bottom: 20px;
@@ -213,10 +213,6 @@ body, .container {
 }
 
 @media (max-width: 480px) {
-  .title {
-    font-size: 22px;
-  }
-
   .input-bar {
     flex-direction: column;
     align-items: center;
