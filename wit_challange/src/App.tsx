@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import './App.css'
 
-
 interface City {
   name: string;
   lat: number;
@@ -10,8 +9,6 @@ interface City {
   country: string;
   state: string;
 }
-
-// https://openweathermap.org/weathermap?basemap=map&cities=true&layer=temperature&lat=40.1867&lon=-8.4050&zoom=5
 
 interface Weather {
   list: Array<any>; 
@@ -33,8 +30,8 @@ function App() {
     {
       id: 'Temperatura',
       data: data.map((item) => ({
-        x: item.dayOfMonth,  // O valor no eixo X será o "time"
-        y: item.temp,  // O valor no eixo Y será a "temp"
+        x: item.dayOfMonth,
+        y: item.temp,
       })),
     },
   ];
@@ -45,7 +42,7 @@ function App() {
   };
 
   const fetchCities = async () => {
-    if (!text.trim()) return; // Evita chamadas vazias
+    if (!text.trim()) return;
 
     setForecast(null);
     
@@ -70,11 +67,10 @@ function App() {
   };
   
   const fetchWeather = async (lat: number, lon: number) => {
-  if (!text.trim()) return; // Evita chamadas vazias
+  if (!text.trim()) return;
   
-  setGraphData([]);  // Limpa o gráfico antes de atualizá-lo
+  setGraphData([]);
 
-  setTimestamp(Date.now());
   setError(null);
 
   const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&cnt=40&units=${useMetric ? 'metric' : 'imperial'}&appid=${apiKey}`;
@@ -88,15 +84,13 @@ function App() {
     const result: Weather = await response.json();
     setForecast(result);
 
-    // Atualiza o gráfico de forma imutável
     const updatedGraphData = result.list
-      .filter((_, index) => index % 8 === 0)  // Pega dados a cada 8 horas
+      .filter((_, index) => index % 8 === 0)
       .map(item => ({
         dayOfMonth: new Date(item.dt * 1000).getDate(),
         temp: item.main.temp
       }));
 
-    // Atualiza o estado com o novo conjunto de dados
     setGraphData(updatedGraphData);
 
   } catch (err) {
@@ -106,7 +100,7 @@ function App() {
 };
 
   const convertUnits = () => {
-    setUseMetric((prev) => !prev); // Alterna entre unidades
+    setUseMetric((prev) => !prev);
   };
 
   useEffect(() => {
