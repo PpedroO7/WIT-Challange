@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import './App.css'
 
 interface City {
@@ -12,6 +12,7 @@ interface City {
 
 interface Weather {
   list: Array<any>; 
+  city: any;
 }
 
 function App() {
@@ -21,20 +22,8 @@ function App() {
   const [forecast, setForecast] = useState<Weather | null>(null);
   const [error, setError] = useState<string | null>(null);
   const apiKey = "3fbb0bf0732c3b8252761325091fb79a";
-  const [timestamp, setTimestamp] = useState<number>(Date.now());
   const [graphData, setGraphData] = useState<any[]>([]);
 
-  const data = [{"dayOfMonth": 23,"temp": 4.77},{"dayOfMonth": 24,"temp": 3.65},{"dayOfMonth": 25,"temp": 6.17},{"dayOfMonth": 26,"temp": 4.3},{"dayOfMonth": 27,"temp": 0.84}];
-
-  const chartData = [
-    {
-      id: 'Temperatura',
-      data: data.map((item) => ({
-        x: item.dayOfMonth,
-        y: item.temp,
-      })),
-    },
-  ];
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("event.target.value", event.target.value)
     setText(event.target.value);
@@ -105,7 +94,7 @@ function App() {
 
   useEffect(() => {
     if (!forecast) return;
-    fetchWeather(forecast.city.coord.lat, forecast.city.coord.lon);
+    fetchWeather(forecast.city.coord.lat, forecast?.city.coord.lon);
   }, [useMetric]);
 
   return (
