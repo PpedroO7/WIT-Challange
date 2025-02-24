@@ -119,6 +119,11 @@ function App() {
         <button className="metric-btn" onClick={convertUnits}>
           Mudar para º{useMetric ? "F" : "C"}
         </button>
+        
+        <button className="source-btn" onClick={() => window.open("https://github.com/PpedroO7/WIT-Challange", "_blank")}>
+          Código fonte
+        </button>
+
       </div>
   
       {error && <p style={{ color: "red" }}>Erro: {error}</p>}
